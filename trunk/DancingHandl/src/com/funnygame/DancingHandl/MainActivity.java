@@ -22,14 +22,17 @@ public class MainActivity extends Activity implements OnHtmlListener {
 
 //		SongApi.search("vi khi da yeu", mContext, this);
 		
-		SongApi.getLinkMp3("http://www.nhaccuatui.com/bai-hat/vi-khi-da-yeu-vu-duy-khanh.RyAuJUsF2l.html", null, new OnHtmlListener() {
-			
-			@Override
-			public <T> void onHandler(int code, T t) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+//		SongApi.getLinkMp3("http://www.nhaccuatui.com/bai-hat/vi-khi-da-yeu-vu-duy-khanh.RyAuJUsF2l.html", null, new OnHtmlListener() {
+//			
+//			@Override
+//			public <T> void onHandler(int code, T t) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
+		
+		List<Song> songs = SongApi.getAllSongFromSdCard(mContext);
+		Toast.makeText(mContext, songs.size()+ "", Toast.LENGTH_LONG).show();
 
 	}
 

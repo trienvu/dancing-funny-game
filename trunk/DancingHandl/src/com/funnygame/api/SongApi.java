@@ -9,8 +9,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.MediaStore.Audio;
 import android.util.Log;
 
 import com.androidquery.AQuery;
@@ -96,8 +100,9 @@ public class SongApi {
 
 								Song song = new Song();
 								song.setId(i);
+								song.setType(Song.SONG_NCT);
 								song.setName(name);
-								song.setUrl(link);
+								song.setPath(link);
 								song.setSinger(nameSinger);
 								song.setUploader(uploader);
 								song.setViews(views);
@@ -176,6 +181,57 @@ public class SongApi {
 			};
 
 		}.execute(url);
+	}
+
+	public static final List<Song> getAllSongFromSdCard(Context context) {
+		List<Song> songs = new ArrayList<Song>();
+
+		// retrieve song info
+		ContentResolver musicResolver = context.getContentResolver();
+
+		Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+
+		Cursor musicCursor = musicResolver.query(musicUri, null, null, null,
+				null);
+
+		if (musicCursor != null && musicCursor.moveToFirst()
+				&& musicCursor.getCount() > 0) {
+			// get columns
+			int titleColumn = musicCursor
+					.getColumnIndex(android.provider.MediaStore.Audio.Media.TITLE);
+//			int idColumn = musicCursor
+			// .getColumnIndex(android.provider.MediaStore.Audio.Media._ID);
+//			int albumColumn = musicCursor
+//					.getColumnIndex(android.provider.MediaStore.Audio.Media.ALBUM);
+			int artistColumn = musicCursor
+					.getColumnIndex(android.provider.MediaStore.Audio.Media.ARTIST);
+//			int durationColumn = musicCursor
+//					.getColumnIndex(android.provider.MediaStore.Audio.Media.DURATION);
+			int pathColumn = musicCursor.getColumnIndex(Audio.Media.DATA);
+
+			// add songs to list
+			while (musicCursor.moveToNext()) {
+				// long thisId = musicCursor.getLong(idColumn);
+				String thisTitle = musicCursor.getString(titleColumn);
+				// int thisDuration = musicCursor.getInt(durationColumn);
+				// String thisAlbum = musicCursor.getString(albumColumn);
+				String thisArtist = musicCursor.getString(artistColumn);
+				String thisPath = musicCursor.getString(pathColumn);
+
+				Song song = new Song();
+				song.setName(thisTitle);
+				song.setPath(thisPath);
+				song.setSinger(thisArtist);
+				song.setType(Song.SONG_SDCARD);
+
+				songs.add(song);
+			}
+
+		}
+		musicCursor.close();
+
+		return songs;
+
 	}
 
 }
