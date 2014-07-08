@@ -2,29 +2,36 @@ package com.funnygame.entity;
 
 public class Song {
 
+	public static final int SONG_SDCARD = 0;
+	public static final int SONG_NCT = 1;
+
 	private int id;
 	private String name;
 	private String singer;
-	private String url;
+	private String path;
 	private String views;
 	private String uploader;
+
+	private int type;
 
 	public Song() {
 	}
 
-	 
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
 
 	public String getViews() {
 		return views;
 	}
 
-
-
 	public void setViews(String views) {
 		this.views = views;
 	}
-
-
 
 	public int getId() {
 		return id;
@@ -50,12 +57,12 @@ public class Song {
 		this.singer = singer;
 	}
 
-	public String getUrl() {
-		return url;
+	public String getPath() {
+		return path;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	public String getUploader() {
@@ -65,12 +72,12 @@ public class Song {
 	public void setUploader(String uploader) {
 		this.uploader = uploader;
 	}
- 
+
 	@Override
 	public String toString() {
 		return "Song [id=" + id + ", name=" + name + ", singer=" + singer
-				+ ", url=" + url + ", views=" + views + ", uploader="
-				+ uploader + "]";
-	} 
+				+ ", path=" + path + ", views=" + views + ", uploader="
+				+ uploader + ", type=" + type + "]";
+	}
 
 }
