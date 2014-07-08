@@ -4,12 +4,14 @@ import java.util.List;
 
 import com.funnygame.api.OnHtmlListener;
 import com.funnygame.api.SongApi;
+import com.funnygame.base.Constant;
 import com.funnygame.entity.Song;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.Bundle; 
+import android.os.Bundle;
+import android.os.Environment;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnHtmlListener {
@@ -24,7 +26,6 @@ public class MainActivity extends Activity implements OnHtmlListener {
 		setContentView(R.layout.activity_main);
 		mProgressBar = new ProgressDialog(mContext);
 		mProgressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-
 
 		// SongApi.search("vi khi da yeu", mContext, this);
 
@@ -41,7 +42,7 @@ public class MainActivity extends Activity implements OnHtmlListener {
 		// List<Song> songs = SongApi.getAllSongFromSdCard(mContext);
 		// Toast.makeText(mContext, songs.size()+ "", Toast.LENGTH_LONG).show();
 
-		//DemoDownload file
+		// DemoDownload file
 		OnHtmlListener handerDownloadFile = new OnHtmlListener() {
 
 			@Override
@@ -59,7 +60,7 @@ public class MainActivity extends Activity implements OnHtmlListener {
 					break;
 
 				case ON_COMPLETE:
-					mProgressBar.dismiss() ;
+					mProgressBar.dismiss();
 					Toast.makeText(mContext, "Download susscess",
 							Toast.LENGTH_LONG).show();
 					break;
@@ -75,10 +76,10 @@ public class MainActivity extends Activity implements OnHtmlListener {
 				}
 			}
 		};
-		
+
 		SongApi.downloadFile(
 				"http://farm1.static.flickr.com/114/298125983_0e4bf66782_b.jpg",
-				"/sdcard/some_photo_from_gdansk_poland.jpg",
+				Constant.BASE_DIR + "some_photo_from_gdansk_poland.jpg",
 				handerDownloadFile);
 
 	}
