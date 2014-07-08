@@ -9,9 +9,7 @@ import com.funnygame.entity.Song;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.Bundle;
-import android.os.Environment;
-import android.widget.ProgressBar;
+import android.os.Bundle; 
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnHtmlListener {
