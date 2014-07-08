@@ -7,6 +7,15 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="19" />
+    
+    <!-- Anhdiepmmk BEGIN -->
+    
+    
+   <uses-permission android:name="android.permission.INTERNET" /> 
+   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+   
+   
+   <!-- Anhdiepmmk END -->S
 
     <application
         android:allowBackup="true"
