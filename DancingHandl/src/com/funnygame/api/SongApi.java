@@ -24,6 +24,8 @@ import com.funnygame.entity.Song;
 import com.funnygame.util.HttpUtil;
 import com.funnygame.util.RegexUtil;
 
+//http://www.androidsnippets.com/download-an-http-file-to-sdcard-with-progress-notification
+
 public class SongApi {
 
 	// tag for parsing search
