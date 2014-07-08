@@ -199,14 +199,14 @@ public class SongApi {
 			// get columns
 			int titleColumn = musicCursor
 					.getColumnIndex(android.provider.MediaStore.Audio.Media.TITLE);
-//			int idColumn = musicCursor
+			// int idColumn = musicCursor
 			// .getColumnIndex(android.provider.MediaStore.Audio.Media._ID);
-//			int albumColumn = musicCursor
-//					.getColumnIndex(android.provider.MediaStore.Audio.Media.ALBUM);
+			// int albumColumn = musicCursor
+			// .getColumnIndex(android.provider.MediaStore.Audio.Media.ALBUM);
 			int artistColumn = musicCursor
 					.getColumnIndex(android.provider.MediaStore.Audio.Media.ARTIST);
-//			int durationColumn = musicCursor
-//					.getColumnIndex(android.provider.MediaStore.Audio.Media.DURATION);
+			// int durationColumn = musicCursor
+			// .getColumnIndex(android.provider.MediaStore.Audio.Media.DURATION);
 			int pathColumn = musicCursor.getColumnIndex(Audio.Media.DATA);
 
 			// add songs to list
@@ -232,6 +232,13 @@ public class SongApi {
 
 		return songs;
 
+	}
+
+	public static void downloadFile(String url, String path,
+			OnHtmlListener htmlListener) {
+		DownloadSong downloadSong = new DownloadSong();
+		downloadSong.setOnHtmlListener(htmlListener);
+		downloadSong.execute(url, path);
 	}
 
 }
