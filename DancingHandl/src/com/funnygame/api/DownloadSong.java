@@ -1,11 +1,14 @@
 package com.funnygame.api;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+
+import com.funnygame.base.Constant;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -41,7 +44,15 @@ public class DownloadSong extends AsyncTask<String, Integer, Boolean> {
 			Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
 
 			InputStream input = new BufferedInputStream(url.openStream());
-			OutputStream output = new FileOutputStream(params[1]);
+
+			File file = new File(Constant.BASE_DIR);
+
+			if (!file.exists()) {
+				file.mkdir();
+			}
+
+			OutputStream output = new FileOutputStream(file.getAbsolutePath()
+					+ File.separator + params[1]);
 
 			byte data[] = new byte[1024];
 

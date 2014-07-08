@@ -7,7 +7,7 @@ public class Constant {
 	// dieppn
 
 	public static final String BASE_DIR = Environment
-			.getExternalStorageDirectory().getPath() + "funnymusic/";
+			.getExternalStorageDirectory().getPath() + "/funnymusic/";
 
 	// dieppn
 

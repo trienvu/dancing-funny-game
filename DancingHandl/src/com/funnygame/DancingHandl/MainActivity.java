@@ -79,8 +79,7 @@ public class MainActivity extends Activity implements OnHtmlListener {
 
 		SongApi.downloadFile(
 				"http://farm1.static.flickr.com/114/298125983_0e4bf66782_b.jpg",
-				Constant.BASE_DIR + "some_photo_from_gdansk_poland.jpg",
-				handerDownloadFile);
+				"hihi.jpg", handerDownloadFile);
 
 	}
 
