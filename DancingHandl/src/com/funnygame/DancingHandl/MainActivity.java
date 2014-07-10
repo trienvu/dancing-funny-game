@@ -1,5 +1,6 @@
 package com.funnygame.DancingHandl;
 
+import java.io.File;
 import java.util.List;
 
 import com.funnygame.api.OnHtmlListener;
@@ -12,6 +13,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnHtmlListener {
@@ -43,43 +45,48 @@ public class MainActivity extends Activity implements OnHtmlListener {
 		// Toast.makeText(mContext, songs.size()+ "", Toast.LENGTH_LONG).show();
 
 		// DemoDownload file
-		OnHtmlListener handerDownloadFile = new OnHtmlListener() {
+		// OnHtmlListener handerDownloadFile = new OnHtmlListener() {
+		//
+		// @Override
+		// public <T> void onHandler(int code, T t) {
+		// // TODO Auto-generated method stub
+		// switch (code) {
+		// case ON_ERROR:
+		// mProgressBar.dismiss();
+		// Toast.makeText(mContext, "Download error",
+		// Toast.LENGTH_LONG).show();
+		// break;
+		//
+		// case ON_START:
+		// mProgressBar.show();
+		// break;
+		//
+		// case ON_COMPLETE:
+		// mProgressBar.dismiss();
+		// Toast.makeText(mContext, "Download susscess",
+		// Toast.LENGTH_LONG).show();
+		// break;
+		//
+		// case ON_UPDATE:
+		// Integer process = (Integer) t;
+		// mProgressBar.setProgress(process);
+		//
+		// break;
+		//
+		// default:
+		// break;
+		// }
+		// }
+		// };
 
-			@Override
-			public <T> void onHandler(int code, T t) {
-				// TODO Auto-generated method stub
-				switch (code) {
-				case ON_ERROR:
-					mProgressBar.dismiss();
-					Toast.makeText(mContext, "Download error",
-							Toast.LENGTH_LONG).show();
-					break;
+		// SongApi.downloadFile(
+		// "http://mp3.zing.vn/xml/load-song/MjAxNCUyRjA0JTJGMjQlMkYzJTJGNyUyRjM3NzZkMDg1ZWQxYjcwMjNhYzI4YjFlYzNjYWY5N2E5Lm1wMyU3QzI=",
+		// "hihi.mp3", null);
 
-				case ON_START:
-					mProgressBar.show();
-					break;
+		int channels = SongApi.getSongInfo(mContext, Constant.BASE_DIR
+				+ "hihi.mp3");
 
-				case ON_COMPLETE:
-					mProgressBar.dismiss();
-					Toast.makeText(mContext, "Download susscess",
-							Toast.LENGTH_LONG).show();
-					break;
-
-				case ON_UPDATE:
-					Integer process = (Integer) t;
-					mProgressBar.setProgress(process);
-
-					break;
-
-				default:
-					break;
-				}
-			}
-		};
-
-		SongApi.downloadFile(
-				"http://farm1.static.flickr.com/114/298125983_0e4bf66782_b.jpg",
-				"hihi.jpg", handerDownloadFile);
+		Log.d("channels", channels + "");
 
 	}
 
