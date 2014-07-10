@@ -9,9 +9,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.media.AudioTrack;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore.Audio;
@@ -185,6 +188,25 @@ public class SongApi {
 		}.execute(url);
 	}
 
+	@SuppressLint("NewApi")
+	public static final int getSongInfo(Context context, String path) {
+
+		try {
+			MediaMetadataRetriever metaRetriver = new MediaMetadataRetriever();
+			metaRetriver.setDataSource(path);
+			int bitRate = Integer.parseInt(metaRetriver
+					.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE)) ;
+			int channels =  AudioTrack.getNativeOutputSampleRate(bitRate);
+			return channels;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+
+		return -1;
+
+	}
+
 	public static final List<Song> getAllSongFromSdCard(Context context) {
 		List<Song> songs = new ArrayList<Song>();
 
@@ -212,7 +234,7 @@ public class SongApi {
 			int pathColumn = musicCursor.getColumnIndex(Audio.Media.DATA);
 
 			// add songs to list
-			while (musicCursor.moveToNext()) {
+			do {
 				// long thisId = musicCursor.getLong(idColumn);
 				String thisTitle = musicCursor.getString(titleColumn);
 				// int thisDuration = musicCursor.getInt(durationColumn);
@@ -227,7 +249,7 @@ public class SongApi {
 				song.setType(Song.SONG_SDCARD);
 
 				songs.add(song);
-			}
+			} while (musicCursor.moveToNext());
 
 		}
 		musicCursor.close();
