@@ -1,34 +1,49 @@
 package com.funnygame.DancingHandl;
 
-import java.io.File;
+import java.io.IOException;
 import java.util.List;
+
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.funnygame.api.OnHtmlListener;
 import com.funnygame.api.SongApi;
 import com.funnygame.base.Constant;
 import com.funnygame.entity.Song;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
-import android.widget.Toast;
-
-public class MainActivity extends Activity implements OnHtmlListener {
+public class MainActivity extends Activity implements OnHtmlListener,
+		MediaPlayer.OnPreparedListener {
 
 	private Context mContext = this;
-
+	private MediaPlayer mPlayer;
 	private ProgressDialog mProgressBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		mPlayer = new MediaPlayer();
+		mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+		mPlayer.setOnPreparedListener(this);
+
 		mProgressBar = new ProgressDialog(mContext);
 		mProgressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-
+		
+		
+		mPlayer = new MediaPlayer();
+		mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+		mPlayer.setOnPreparedListener(this);
+		String pathUri = "android.resource://" + getPackageName() + "/"+R.raw.nuhoncuoicung;
+		playAudio(Uri.parse(pathUri));
+		
 		// SongApi.search("vi khi da yeu", mContext, this);
 
 		// SongApi.getLinkMp3("http://www.nhaccuatui.com/bai-hat/vi-khi-da-yeu-vu-duy-khanh.RyAuJUsF2l.html",
@@ -123,4 +138,52 @@ public class MainActivity extends Activity implements OnHtmlListener {
 		Toast.makeText(mContext, "Searching...	", Toast.LENGTH_LONG).show();
 	}
 
+	private void playAudio(Uri uri) {
+		if (mPlayer.isPlaying())
+			mPlayer.stop();
+		mPlayer.reset();
+		try {
+			mPlayer.setDataSource(getApplicationContext(), uri);
+			mPlayer.prepare();
+
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
+	public void onPrepared(MediaPlayer mp) {
+		if (!mp.isPlaying())
+			mp.start();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		if (mPlayer != null) {
+			if (mPlayer.isPlaying()) {
+				mPlayer.stop();
+			}
+			mPlayer.release();
+		}
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (mPlayer != null) mPlayer.release();
+
+	}
 }
